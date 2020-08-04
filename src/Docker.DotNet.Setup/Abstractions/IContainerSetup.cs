@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Docker.DotNet.Setup.Abstractions
 {
-    public interface IImageSetup
+    public interface IContainerSetup
     {
         bool IsReady { get; }
 

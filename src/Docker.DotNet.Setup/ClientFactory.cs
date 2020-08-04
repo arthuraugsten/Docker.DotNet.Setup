@@ -4,25 +4,35 @@ using System;
 
 namespace Docker.DotNet.Setup
 {
-    public static class ClientFactory
+    public sealed class ClientFactory : IClientFactory
     {
-        private static readonly IPlataformInfo _operationalSystemInfo = new PlataformIndo();
+        private readonly IPlataformInfo _plataformInfo;
 
-        public static DockerClient CreateClient()
+        public ClientFactory(IPlataformInfo plataformInfo)
+            => _plataformInfo = plataformInfo;
+
+        public IClientFacade CreateClient()
         {
-            using (var dockerConfiguration = new DockerClientConfiguration(GetDockerApiUri()))
-                return dockerConfiguration.CreateClient();
+            try
+            {
+                using (var dockerConfiguration = new DockerClientConfiguration(GetDockerApiUri()))
+                    return new ClientFacade(dockerConfiguration.CreateClient());
+            }
+            catch (DockerApiException ex)
+            {
+                throw new InvalidOperationException("Something was wrong on docker API communication.", ex);
+            }
         }
 
-        private static Uri GetDockerApiUri()
+        private Uri GetDockerApiUri()
         {
-            if (_operationalSystemInfo.IsWindows)
+            if (_plataformInfo.IsWindows)
                 return new Uri("npipe://./pipe/docker_engine");
 
-            if (_operationalSystemInfo.IsLinux)
+            if (_plataformInfo.IsLinux)
                 return new Uri("unix:/var/run/docker.sock");
 
-            throw new UnsupportedPlataform();
+            throw new UnsupportedPlataformException();
         }
     }
 }

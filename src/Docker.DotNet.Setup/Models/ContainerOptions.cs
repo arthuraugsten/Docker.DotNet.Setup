@@ -2,11 +2,14 @@ using System.Collections.Generic;
 
 namespace Docker.DotNet.Setup.Models
 {
-    public sealed class ImageOptions
+    public sealed class ContainerOptions
     {
+        public string ImageName { get; set; }
+        public string ImageTag { get; set; }
+        public string Name { get; set; }
+        public bool RemoveContainerOnExit { get; set; } = true;
         public IList<string> Environment { get; } = new List<string>();
         public PortOptions PortsOptions { get; set; }
         public IEnumerable<MountOptions> Mounts { get; } = new List<MountOptions>();
-        public bool RemoveContainerOnExit { get; set; } = true;
     }
 }

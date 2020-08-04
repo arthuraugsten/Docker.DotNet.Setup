@@ -1,21 +1,22 @@
 using Docker.DotNet.Models;
 using Docker.DotNet.Setup.Abstractions;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Docker.DotNet.Setup.Mappers
 {
-    internal static class NetworkConfigMapper
+    public static class NetworkConfigMapper
     {
-        public static async Task<NetworkingConfig> MapFromAsync(INetworkSetup setup)
+        public static NetworkingConfig MapFrom(INetworkSetup setup, string networkId)
         {
-            if (setup is null) return null;
+            if (setup is null) throw new ArgumentNullException(nameof(setup));
+            if (string.IsNullOrEmpty(networkId)) throw new ArgumentNullException(nameof(networkId));
 
             return new NetworkingConfig
             {
                 EndpointsConfig = new Dictionary<string, EndpointSettings>
                 {
-                    { setup.Name , new EndpointSettings { NetworkID = await setup.GetNetworkIdAsync().ConfigureAwait(false) } }
+                    { setup.Name , new EndpointSettings { NetworkID = networkId } }
                 }
             };
         }

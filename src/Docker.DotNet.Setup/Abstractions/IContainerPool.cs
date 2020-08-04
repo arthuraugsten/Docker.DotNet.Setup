@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 
 namespace Docker.DotNet.Setup.Abstractions
 {
-    public interface IImagePool
+    public interface IContainerPool
     {
-        IImagePool Add<TSetup>(TSetup setup) where TSetup : IImageSetup;
+        IContainerPool Add<TSetup>(TSetup setup) where TSetup : IContainerSetup;
         Task ConfigureAllAsync();
         Task DiscardAllAsync();
     }

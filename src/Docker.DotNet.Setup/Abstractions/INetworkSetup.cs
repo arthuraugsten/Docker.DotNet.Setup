@@ -8,6 +8,5 @@ namespace Docker.DotNet.Setup.Abstractions
         bool ShouldRemoveNetworkOnExit { get; }
 
         Task CreateNetworkAsync();
-        Task<string> GetNetworkIdAsync();
     }
 }

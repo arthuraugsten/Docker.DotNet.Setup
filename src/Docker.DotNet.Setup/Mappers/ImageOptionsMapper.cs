@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Docker.DotNet.Setup.Mappers
 {
-    internal static class ImageOptionsMapper
+    public static class ImageOptionsMapper
     {
-        public static CreateContainerParameters MapFrom(ImageOptions options)
+        public static CreateContainerParameters MapFrom(ContainerOptions options)
         {
             if (options is null)
                 return default;

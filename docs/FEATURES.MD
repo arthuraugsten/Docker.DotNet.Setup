@@ -1,10 +1,8 @@
 # Current feature development:
 
--   Initial structure to support image setups from image hub
--   Supports add networks on images setup
+-   Add config validations
 
 # Next features to develop:
 
--   Add config validations
--   Supports build images from Dockerfile
+-   Supports build images from Dockerfile with dependencies
 -   Support multilanguage message errors
