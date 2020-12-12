@@ -26,13 +26,13 @@ namespace Docker.DotNet.Setup
 
         private Uri GetDockerApiUri()
         {
+            const string windowsUri = "npipe://./pipe/docker_engine";
+            const string linuxUri = "unix:/var/run/docker.sock";
+
             if (_plataformInfo.IsWindows)
-                return new Uri("npipe://./pipe/docker_engine");
+                return new Uri(windowsUri);
 
-            if (_plataformInfo.IsLinux)
-                return new Uri("unix:/var/run/docker.sock");
-
-            throw new UnsupportedPlataformException();
+            return _plataformInfo.IsLinux ? new Uri(linuxUri) : throw new UnsupportedPlataformException();
         }
     }
 }

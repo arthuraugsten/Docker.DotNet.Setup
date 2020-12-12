@@ -43,7 +43,7 @@ namespace Docker.DotNet.Setup
 
             ContainerId = container is null
                 ? await _client.CreateContainerAsync(_options, _network).ConfigureAwait(false)
-                : ContainerId = container.Id;
+                : container.Id;
         }
 
         protected void DefineAsReady()
@@ -80,7 +80,10 @@ namespace Docker.DotNet.Setup
                     DefineAsReady();
                 }
 
-                else throw new InvalidOperationException("Something unexpected happened during image setup.", ex);
+                else
+                {
+                    throw new InvalidOperationException("Something unexpected happened during image setup.", ex);
+                }
             }
         }
 

@@ -20,8 +20,7 @@ namespace Docker.DotNet.Setup
         }
 
         public NetworkSetup(IClientFacade client, Func<NetworkOptions> options)
-            : this(client, options?.Invoke())
-        { }
+            : this(client, options?.Invoke()) { }
 
         protected string Id { get; private set; }
 

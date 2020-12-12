@@ -5,6 +5,10 @@ namespace Docker.DotNet.Setup.Models
         private int _exposedPort;
 
         public int InternalPort { get; set; }
-        public int ExposedPort { get => _exposedPort == default ? InternalPort : _exposedPort; set => _exposedPort = value; }
+        public int ExposedPort
+        {
+            get => _exposedPort == default ? InternalPort : _exposedPort;
+            set => _exposedPort = value;
+        }
     }
 }

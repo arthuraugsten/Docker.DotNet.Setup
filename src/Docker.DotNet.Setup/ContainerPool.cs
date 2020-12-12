@@ -30,6 +30,9 @@ namespace Docker.DotNet.Setup
             return this;
         }
 
+        public IContainerPool Add<TSetup>() where TSetup : IContainerSetup, new()
+            => Add(new TSetup());
+
         public async Task ConfigureAllAsync()
         {
             foreach (var setup in _setups)
