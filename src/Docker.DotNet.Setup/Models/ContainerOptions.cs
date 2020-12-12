@@ -8,8 +8,8 @@ namespace Docker.DotNet.Setup.Models
         public string ImageTag { get; set; }
         public string Name { get; set; }
         public bool RemoveContainerOnExit { get; set; } = true;
-        public IList<string> Environment { get; } = new List<string>();
+        public IList<string> Environment { get; set; }
         public PortOptions PortsOptions { get; set; }
-        public IEnumerable<MountOptions> Mounts { get; } = new List<MountOptions>();
+        public IEnumerable<MountOptions> Mounts { get; set; }
     }
 }

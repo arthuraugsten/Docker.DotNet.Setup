@@ -1,7 +1,6 @@
 using Docker.DotNet.Setup.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Docker.DotNet.Setup
@@ -36,20 +35,18 @@ namespace Docker.DotNet.Setup
         public async Task ConfigureAllAsync()
         {
             foreach (var setup in _setups)
-                await setup.ConfigureAsync().ConfigureAwait(false);
+                await setup.ConfigureAsync(_client, _network);
         }
 
         public async Task DiscardAllAsync()
         {
-            var discardTasks = _setups.Select(s =>
-                Task.Factory.StartNew(async () => await s.DiscardAsync().ConfigureAwait(false)));
-
-            await Task.WhenAll(discardTasks).ConfigureAwait(false);
+            foreach (var setup in _setups)
+                await setup.DiscardAsync(_client);
 
             if (_network?.ShouldRemoveNetworkOnExit ?? false)
             {
-                var networkId = await _client.GetNetworkIdAsync(_network.Name).ConfigureAwait(false);
-                await _client.DeleteNetworkAsync(networkId).ConfigureAwait(false);
+                var networkId = await _client.GetNetworkIdAsync(_network.Name);
+                await _client.DeleteNetworkAsync(networkId);
             }
         }
     }

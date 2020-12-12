@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2EA00AB1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker.DotNet.Setup.UnitTests", "tests\Docker.DotNet.Setup.UnitTests\Docker.DotNet.Setup.UnitTests.csproj", "{63BFE8B2-909A-4084-A069-6D8DBCDCA914}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{0D5EE2C3-C43B-464A-8F23-8FF67A64D23A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSamples", "samples\TestSamples\TestSamples.csproj", "{7A63A52B-4BDF-4A06-806E-A7788821E9D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,9 +52,22 @@ Global
 		{63BFE8B2-909A-4084-A069-6D8DBCDCA914}.Release|x64.Build.0 = Release|Any CPU
 		{63BFE8B2-909A-4084-A069-6D8DBCDCA914}.Release|x86.ActiveCfg = Release|Any CPU
 		{63BFE8B2-909A-4084-A069-6D8DBCDCA914}.Release|x86.Build.0 = Release|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Debug|x64.Build.0 = Debug|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Debug|x86.Build.0 = Debug|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Release|x64.ActiveCfg = Release|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Release|x64.Build.0 = Release|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Release|x86.ActiveCfg = Release|Any CPU
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DAE46232-51D8-407B-8DAD-5E5C27B3895C} = {A01EFB44-ABCB-4007-85F3-C0A349E29494}
 		{63BFE8B2-909A-4084-A069-6D8DBCDCA914} = {2EA00AB1-AB30-4BA9-B273-ACD37A75B466}
+		{7A63A52B-4BDF-4A06-806E-A7788821E9D5} = {0D5EE2C3-C43B-464A-8F23-8FF67A64D23A}
 	EndGlobalSection
 EndGlobal

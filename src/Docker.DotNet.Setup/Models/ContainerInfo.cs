@@ -2,6 +2,8 @@ namespace Docker.DotNet.Setup.Models
 {
     public sealed class ContainerInfo
     {
+        private const string RunningState = "running";
+
         public ContainerInfo(string id, string status)
         {
             Id = id;
@@ -11,10 +13,6 @@ namespace Docker.DotNet.Setup.Models
         public string Id { get; }
         public string State { get; }
 
-        public void Deconstruct(out string id, out string state)
-        {
-            id = Id;
-            state = State;
-        }
+        public bool IsRunning => State == RunningState;
     }
 }

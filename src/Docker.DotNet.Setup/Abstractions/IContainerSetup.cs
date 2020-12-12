@@ -6,7 +6,7 @@ namespace Docker.DotNet.Setup.Abstractions
     {
         bool IsReady { get; }
 
-        Task ConfigureAsync();
-        Task DiscardAsync();
+        Task ConfigureAsync(IClientFacade client, INetworkSetup network);
+        Task DiscardAsync(IClientFacade client);
     }
 }

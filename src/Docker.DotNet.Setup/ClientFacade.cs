@@ -23,13 +23,13 @@ namespace Docker.DotNet.Setup
 
             var image = ImageOptionsMapper.MapFrom(options);
 
-            image.Name = options.ImageName;
+            image.Name = options.Name;
             image.Image = $"{options.ImageName}:{options.ImageTag}";
 
             if (network != default)
-                image.NetworkingConfig = NetworkConfigMapper.MapFrom(network, await GetNetworkIdAsync(network.Name).ConfigureAwait(false));
+                image.NetworkingConfig = NetworkConfigMapper.MapFrom(network, await GetNetworkIdAsync(network.Name));
 
-            var response = await _client.Containers.CreateContainerAsync(image).ConfigureAwait(false);
+            var response = await _client.Containers.CreateContainerAsync(image);
             return response.ID;
         }
 
@@ -37,7 +37,7 @@ namespace Docker.DotNet.Setup
         {
             const string driverType = "bridge";
 
-            var networks = await _client.Networks.ListNetworksAsync().ConfigureAwait(false);
+            var networks = await _client.Networks.ListNetworksAsync();
 
             if (networks.FirstOrDefault(n => n.Name == name) is NetworkResponse response)
                 return response.ID;
@@ -47,13 +47,13 @@ namespace Docker.DotNet.Setup
                 {
                     Name = name,
                     Driver = driverType
-                }).ConfigureAwait(false);
+                });
 
             return network.ID;
         }
 
         public async Task DeleteNetworkAsync(string networkId)
-            => await _client.Networks.DeleteNetworkAsync(networkId).ConfigureAwait(false);
+            => await _client.Networks.DeleteNetworkAsync(networkId);
 
         public async Task DownloadImageAsync(string name, string tag)
             => await _client.Images
@@ -61,15 +61,14 @@ namespace Docker.DotNet.Setup
                     new ImagesCreateParameters { FromImage = name, Tag = tag },
                     new AuthConfig(),
                     new Progress<JSONMessage>()
-                )
-               .ConfigureAwait(false);
+                );
 
         public async Task<string> GetNetworkIdAsync(string name)
         {
             if (string.IsNullOrEmpty(name))
                 return default;
 
-            var networks = await _client.Networks.ListNetworksAsync().ConfigureAwait(false);
+            var networks = await _client.Networks.ListNetworksAsync();
 
             return networks.FirstOrDefault(n => n.Name == name)?.ID;
         }
@@ -77,8 +76,7 @@ namespace Docker.DotNet.Setup
         public async Task<ContainerInfo> GetExistingContainerAsync(string name)
         {
             var containers = await _client.Containers
-                .ListContainersAsync(new ContainersListParameters { All = true })
-                .ConfigureAwait(false);
+                .ListContainersAsync(new ContainersListParameters { All = true });
 
             var selectedContainer = containers?.FirstOrDefault(c => c.Names.Any(n => n == $"/{name}"));
 
@@ -87,12 +85,10 @@ namespace Docker.DotNet.Setup
 
         public async Task<bool> IsRunningAsync(string name)
         {
-            const string runningState = "running";
-
             try
             {
-                (var _, var state) = await GetExistingContainerAsync(name).ConfigureAwait(false);
-                return state == runningState;
+                var info = await GetExistingContainerAsync(name);
+                return info?.IsRunning ?? false;
             }
             catch (DockerApiException)
             {
@@ -101,19 +97,13 @@ namespace Docker.DotNet.Setup
         }
 
         public async Task KillContainerAsync(string containerId)
-            => await _client.Containers
-                .KillContainerAsync(containerId, new ContainerKillParameters())
-                .ConfigureAwait(false);
+            => await _client.Containers.KillContainerAsync(containerId, new ContainerKillParameters());
 
         public async Task RemoveContainerAsync(string containerId)
-            => await _client.Containers
-                .RemoveContainerAsync(containerId, new ContainerRemoveParameters { Force = true })
-                .ConfigureAwait(false);
+            => await _client.Containers.RemoveContainerAsync(containerId, new ContainerRemoveParameters { Force = true });
 
         public async Task StartContainerAsync(string containerId)
-            => await _client.Containers
-                .StartContainerAsync(containerId, new ContainerStartParameters())
-                .ConfigureAwait(false);
+            => await _client.Containers.StartContainerAsync(containerId, new ContainerStartParameters());
 
         public void Dispose()
         {

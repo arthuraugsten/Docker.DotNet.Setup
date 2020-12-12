@@ -4,7 +4,15 @@ namespace Docker.DotNet.Setup.Models
 {
     public sealed class NetworkOptions
     {
-        public string Name { get; set; } = $"setup-{Guid.NewGuid()}";
-        public bool RemoveNetworkOnExit { get; set; } = true;
+        public NetworkOptions() { }
+
+        public NetworkOptions(string name)
+            => Name = name;
+
+        public NetworkOptions(string name, bool removeNetworkOnExit) : this(name)
+            => RemoveNetworkOnExit = removeNetworkOnExit;
+
+        public string Name { get; } = $"setup-{Guid.NewGuid()}";
+        public bool RemoveNetworkOnExit { get; } = true;
     }
 }
