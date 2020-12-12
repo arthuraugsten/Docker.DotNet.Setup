@@ -1,16 +1,12 @@
 using Docker.DotNet.Setup.Abstractions;
 using Docker.DotNet.Setup.Exceptions;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Docker.DotNet.Setup
 {
     public sealed class ClientFactory : IClientFactory
     {
-        private readonly IPlataformInfo _plataformInfo;
-
-        public ClientFactory(IPlataformInfo plataformInfo)
-            => _plataformInfo = plataformInfo;
-
         public IClientFacade CreateClient()
         {
             try
@@ -29,10 +25,12 @@ namespace Docker.DotNet.Setup
             const string windowsUri = "npipe://./pipe/docker_engine";
             const string linuxUri = "unix:/var/run/docker.sock";
 
-            if (_plataformInfo.IsWindows)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return new Uri(windowsUri);
 
-            return _plataformInfo.IsLinux ? new Uri(linuxUri) : throw new UnsupportedPlataformException();
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? new Uri(linuxUri)
+                : throw new UnsupportedPlataformException();
         }
     }
 }

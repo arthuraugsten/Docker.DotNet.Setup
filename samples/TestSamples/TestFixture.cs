@@ -10,7 +10,7 @@ namespace TestSamples
 
         public TestFixture()
         {
-            var client = new ClientFactory(new PlataformInfo()).CreateClient();
+            var client = new ClientFactory().CreateClient();
             var network = new AppNetworkSetup(client);
 
             _pool = new ContainerPool(client, network);
